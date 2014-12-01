@@ -1,4 +1,4 @@
-#ifndef OOP_Building
+ï»¿#ifndef OOP_Building
 #define OOP_Building
 #include "virus.h"
 #include <stdlib.h>
@@ -22,35 +22,35 @@ struct Building_Information{
 		dead_pc = 0;
 		live_pc = total_pc;
 	}
-	int total_pc;			//ÃÑ pc¼ö
-	int uninfected_pc;		//°¨¿° µÇÁö ¾ÊÀº pc¼ö->total_pc-infected_pc·Î ¾÷µ¥ÀÌÆ®
-	int infected_pc;		//°¨¿° pc¼ö
-	int dead_pc;			//ÀÛµ¿ ºÒ°¡´ÉÇÑ pc¼ö
-	int live_pc;			//ÀÛµ¿ °¡´ÉÇÑ pc¼ö
-	int building_index;		//¸î ¹øÂ°·Î ÇÒ´çµÈ buildingÀÎÁö ¾Ë·ÁÁÖ´Â º¯¼ö
+	int total_pc;			//ì´ pcìˆ˜
+	int uninfected_pc;		//ê°ì—¼ ë˜ì§€ ì•Šì€ pcìˆ˜->total_pc-infected_pcë¡œ ì—…ë°ì´íŠ¸
+	int infected_pc;		//ê°ì—¼ pcìˆ˜
+	int dead_pc;			//ì‘ë™ ë¶ˆê°€ëŠ¥í•œ pcìˆ˜
+	int live_pc;			//ì‘ë™ ê°€ëŠ¥í•œ pcìˆ˜
+	int building_index;		//ëª‡ ë²ˆì§¸ë¡œ í• ë‹¹ëœ buildingì¸ì§€ ì•Œë ¤ì£¼ëŠ” ë³€ìˆ˜
 };
 
 class Building{
 private:
-	double Activity[4];						//On,Off-line È°µ¿ Á¤µµ 4°æ¿ì. Ã¹ ¹øÂ°´Â °¨¿°ÀÌ ¸Å¿ì ÀßµÊ. µÎ ¹øÂ°´Â Online¿¡ ÀÇÇÑ °¨¿°ÀÌ ÀßµÊ.
-											//¼¼ ¹øÂ°´Â Offline¿¡ ÀÇÇÑ °¨¿°ÀÌ ÀßµÊ. ³× ¹øÂ°´Â °¨¿°ÀÌ Àß ¾ÈµÊ.
-	double Security[3];						//º¸¾ÈÀÇ½Ä ¼¼ ´Ü°è »óÁßÇÏ. ÃÑ 3°¡ÁöÀÌ¸ç, Ã¹ ¹øÂ°°¡ ÀÇ½ÄÀÌ Á¦ÀÏ ³ô°í ¸¶Áö¸·ÀÌ ÀÇ½ÄÀÌ Á¦ÀÏ ³ôÀ½.
-											//¼¼ ´Ü°èÀÇ ÇÕÀº ÀÏÁ¤ÇÏ¸ç, ³ôÀº ´Ü°èÀÇ °ªÀÌ Å¬¼ö·Ï pcµéÀÌ Àß ¾ÈÁ×À½.
-	double Research_Ability;				//¹é½Å¿¡ ±â¿©ÇÒ ¼ö ÀÖ´Â Á¤µµ
-	double Online_Use;						//Ã³À½¿¡´Â 1ÀÌÁö¸¸, ÀÌ °ªÀÌ AI¿¡ ÀÇÇØ ³·¾ÆÁö¸é onlineÀ» ÅëÇÑ ³»ºÎ ±¹°¡ Àü¿°¼ºÀÌ ³·¾ÆÁø´Ù.
-	double Offline_Use;						//Ã³À½¿¡´Â 1ÀÌÁö¸¸, ÀÌ °ªÀÌ AI¿¡ ÀÇÇØ ³·¾ÆÁö¸é offlineÀ» ÅëÇÑ ³»ºÎ ±¹°¡ Àü¿°¼ºÀÌ ³·¾ÆÁø´Ù.
-	char name[21];							//buildingÀÇ ÀÌ¸§
-	VirusStatus* vs;						//¹ÙÀÌ·¯½ºstatus Æ÷ÀÎÅÍ
-	double interact[2][B_NUMBER];			//building³¢¸® »óÈ£ÀÛ¿ëÇÏ´Â pc¼ö¸¦ controlÇÒ º¯¼ö. Ã¹ ÇàÀº Online°æ·ÎÀÌ¸ç,
-											//µÎ¹øÂ° ÇàÀº Offline°æ·ÎÀÌ´Ù. ÀÌ °ªÀÌ 0ÀÌµÇ¸é, ±× ±¹°¡·ÎÀÇ ÀÌµ¿Àº ¾ÈµÈ´Ù.
-	double infect_percent;					//°¨¿°µÈ percentage.
-	double death_percent;					//ÀÛµ¿ ºÒ°¡´É percentage
-	int infect_level;						//ÇöÀç ºôµùÀÇ °¨¿°·¹º§
-	int death_level;						//ÇöÀç ºôµùÀÇ Á×À½·¹º§
-	int coin;								//0ÀÌ¸é »ı¼ºx. coin°ª¸¸Å­ µ·À» ¿£Áø¿¡°Ô ÁÜ.
-	Building* building_list[B_NUMBER];		//´Ù¸¥ ºôµùµéÀ» °¡¸®Å°´Â Æ÷ÀÎÅÍ
-	double Contribute_to_Vaccine;			//¹é½Å¿¡ °è»êÇØ¼­ ÀüÇØÁÖ´Â °ª. ÀÌ ±â¿©µµ°¡ Å©¸é ¹é½Å °³¹ßÀÌ »¡¶óÁü.
-	Building_Information building_info;		//ºôµùÀÇ Á¤º¸
+	double Activity[4];						//On,Off-line í™œë™ ì •ë„ 4ê²½ìš°. ì²« ë²ˆì§¸ëŠ” ê°ì—¼ì´ ë§¤ìš° ì˜ë¨. ë‘ ë²ˆì§¸ëŠ” Onlineì— ì˜í•œ ê°ì—¼ì´ ì˜ë¨.
+											//ì„¸ ë²ˆì§¸ëŠ” Offlineì— ì˜í•œ ê°ì—¼ì´ ì˜ë¨. ë„¤ ë²ˆì§¸ëŠ” ê°ì—¼ì´ ì˜ ì•ˆë¨.
+	double Security[3];						//ë³´ì•ˆì˜ì‹ ì„¸ ë‹¨ê³„ ìƒì¤‘í•˜. ì´ 3ê°€ì§€ì´ë©°, ì²« ë²ˆì§¸ê°€ ì˜ì‹ì´ ì œì¼ ë†’ê³  ë§ˆì§€ë§‰ì´ ì˜ì‹ì´ ì œì¼ ë†’ìŒ.
+											//ì„¸ ë‹¨ê³„ì˜ í•©ì€ ì¼ì •í•˜ë©°, ë†’ì€ ë‹¨ê³„ì˜ ê°’ì´ í´ìˆ˜ë¡ pcë“¤ì´ ì˜ ì•ˆì£½ìŒ.
+	double Research_Ability;				//ë°±ì‹ ì— ê¸°ì—¬í•  ìˆ˜ ìˆëŠ” ì •ë„
+	double Online_Use;						//ì²˜ìŒì—ëŠ” 1ì´ì§€ë§Œ, ì´ ê°’ì´ AIì— ì˜í•´ ë‚®ì•„ì§€ë©´ onlineì„ í†µí•œ ë‚´ë¶€ êµ­ê°€ ì „ì—¼ì„±ì´ ë‚®ì•„ì§„ë‹¤.
+	double Offline_Use;						//ì²˜ìŒì—ëŠ” 1ì´ì§€ë§Œ, ì´ ê°’ì´ AIì— ì˜í•´ ë‚®ì•„ì§€ë©´ offlineì„ í†µí•œ ë‚´ë¶€ êµ­ê°€ ì „ì—¼ì„±ì´ ë‚®ì•„ì§„ë‹¤.
+	char name[21];							//buildingì˜ ì´ë¦„
+	VirusStatus* vs;						//ë°”ì´ëŸ¬ìŠ¤status í¬ì¸í„°
+	double interact[2][B_NUMBER];			//buildingë¼ë¦¬ ìƒí˜¸ì‘ìš©í•˜ëŠ” pcìˆ˜ë¥¼ controlí•  ë³€ìˆ˜. ì²« í–‰ì€ Onlineê²½ë¡œì´ë©°,
+											//ë‘ë²ˆì§¸ í–‰ì€ Offlineê²½ë¡œì´ë‹¤. ì´ ê°’ì´ 0ì´ë˜ë©´, ê·¸ êµ­ê°€ë¡œì˜ ì´ë™ì€ ì•ˆëœë‹¤.
+	double infect_percent;					//ê°ì—¼ëœ percentage.
+	double death_percent;					//ì‘ë™ ë¶ˆê°€ëŠ¥ percentage
+	int infect_level;						//í˜„ì¬ ë¹Œë”©ì˜ ê°ì—¼ë ˆë²¨
+	int death_level;						//í˜„ì¬ ë¹Œë”©ì˜ ì£½ìŒë ˆë²¨
+	int coin;								//0ì´ë©´ ìƒì„±x. coinê°’ë§Œí¼ ëˆì„ ì—”ì§„ì—ê²Œ ì¤Œ.
+	Building* building_list[B_NUMBER];		//ë‹¤ë¥¸ ë¹Œë”©ë“¤ì„ ê°€ë¦¬í‚¤ëŠ” í¬ì¸í„°
+	double Contribute_to_Vaccine;			//ë°±ì‹ ì— ê³„ì‚°í•´ì„œ ì „í•´ì£¼ëŠ” ê°’. ì´ ê¸°ì—¬ë„ê°€ í¬ë©´ ë°±ì‹  ê°œë°œì´ ë¹¨ë¼ì§.
+	Building_Information building_info;		//ë¹Œë”©ì˜ ì •ë³´
 public:
 	Building(char* n, int index, int totalpc, double* act, double* sec, double RA, VirusStatus* _vs, double** _interact)
 		: building_info(totalpc,index)
@@ -70,7 +70,7 @@ public:
 		coin = 0;
 	}
 
-													//get,setµé
+													//get,setë“¤
 	void getInteract(double** it){for(int i =0; i<2; i++) it[i] = interact[i];}
 	void setBuildingList(Building** b){for(int i =0; i<B_NUMBER; i++) building_list[i] = b[i];}
 	void getInformation(Building_Information* info);
@@ -92,26 +92,26 @@ public:
 	void setInfectedpc(double ipc);
 	void getInfectedpc(double& ipc);
 
-													//¾Æ·¡ºÎÅÍ ¿ÜºÎ¿¡¼­ È£Ãâ µÉ methodµé
+													//ì•„ë˜ë¶€í„° ì™¸ë¶€ì—ì„œ í˜¸ì¶œ ë  methodë“¤
 	void startedBuilding();
-	//¿À¿°ÀÌ ½ÃÀÛµÇ´Â ºôµù.
+	//ì˜¤ì—¼ì´ ì‹œì‘ë˜ëŠ” ë¹Œë”©.
 	void do_operation();
-	//ÇÑ ÅÏ¿¡ ºôµù ³»ºÎÇÔ¼öµéÀ» ¸ğµÎ ÁøÇàÇØÁØ´Ù. Engine¿¡¼­ call		
+	//í•œ í„´ì— ë¹Œë”© ë‚´ë¶€í•¨ìˆ˜ë“¤ì„ ëª¨ë‘ ì§„í–‰í•´ì¤€ë‹¤. Engineì—ì„œ call		
 	void iscoinExist(int& coin_flag);
-	//¿£Áø¿¡¼­ ÄÚÀÎÀÌ ¾ò¾îÁ³´ÂÁö¸¦ È®ÀÎÇÒ ÇÔ¼ö
+	//ì—”ì§„ì—ì„œ ì½”ì¸ì´ ì–»ì–´ì¡ŒëŠ”ì§€ë¥¼ í™•ì¸í•  í•¨ìˆ˜
 	void getC2V(double& p);
-	//±â¿©µµ(p)°¡ Å©¸é ¹é½Å °³¹ßÀÌ »¡¶óÁü
+	//ê¸°ì—¬ë„(p)ê°€ í¬ë©´ ë°±ì‹  ê°œë°œì´ ë¹¨ë¼ì§
 
 
-													//¾Æ·¡ºÎÅÍ ºôµù³»ºÎ¿¡¼­ µ¿ÀÛÇÒ methodµé
+													//ì•„ë˜ë¶€í„° ë¹Œë”©ë‚´ë¶€ì—ì„œ ë™ì‘í•  methodë“¤
 	void infected_to_death();
-	//°¨¿°µÈ pcÁß ÀÏºÎ¸¦ Á×ÀÎ´Ù.	
+	//ê°ì—¼ëœ pcì¤‘ ì¼ë¶€ë¥¼ ì£½ì¸ë‹¤.	
 	void virus_spread_in_a_building();
-	//ºôµù ³»ºÎ¿¡¼­ ¹ÙÀÌ·¯½º°¡ ÆÛÁö´Â Á¤µµ. infected_pc¼ö¿Í dead_pc¼ö°¡ º¯ÇÔ.
+	//ë¹Œë”© ë‚´ë¶€ì—ì„œ ë°”ì´ëŸ¬ìŠ¤ê°€ í¼ì§€ëŠ” ì •ë„. infected_pcìˆ˜ì™€ dead_pcìˆ˜ê°€ ë³€í•¨.
 	void info_update();
-	//ºôµù¿¡ ¹ÙÀÌ·¯½º°¡ ÆÛÁö°í ³­ ´ÙÀ½ÀÇ º¯È­¸¦ updateÇØÁØ´Ù.
+	//ë¹Œë”©ì— ë°”ì´ëŸ¬ìŠ¤ê°€ í¼ì§€ê³  ë‚œ ë‹¤ìŒì˜ ë³€í™”ë¥¼ updateí•´ì¤€ë‹¤.
 	void virus_spread_through_all_buildings();
-	//ÇÑ ºôµù¿¡¼­ ´Ù¸¥ ºôµùÀ¸·Î °¡´Â pcÀÌµ¿ÇÔ¼ö
+	//í•œ ë¹Œë”©ì—ì„œ ë‹¤ë¥¸ ë¹Œë”©ìœ¼ë¡œ ê°€ëŠ” pcì´ë™í•¨ìˆ˜
 };
 
 #endif

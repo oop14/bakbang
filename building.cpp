@@ -1,4 +1,4 @@
-#include "building.h"
+ï»¿#include "building.h"
 void Building::getInformation(Building_Information* info){
 	*info = building_info;
 }
@@ -20,9 +20,9 @@ void Building::setInfectedpc(double ipc){
 void Building::getInfectedpc(double& ipc){
 	ipc = building_info.infected_pc;
 }
-														//±âº»ÀûÀÎ get,set³¡
+														//ê¸°ë³¸ì ì¸ get,setë
 
-														//¾Æ·¡ºÎÅÍ ¿ÜºÎ¿¡¼­ È£ÃâµÇ´Â methodµé
+														//ì•„ë˜ë¶€í„° ì™¸ë¶€ì—ì„œ í˜¸ì¶œë˜ëŠ” methodë“¤
 void Building::getInformation(Building_Information* info){
 	*info = building_info;
 }
@@ -42,7 +42,7 @@ void Building::iscoinExist(int& coin_flag){
 }
 
 void Building::getC2V(double& p){ 
-	double v_serious=0;	//¹ÙÀÌ·¯½ºÀÇ ½É°¢¼º
+	double v_serious=0;	//ë°”ì´ëŸ¬ìŠ¤ì˜ ì‹¬ê°ì„±
 	vs->getSerious(v_serious);
 	Contribute_to_Vaccine = Research_Ability*(infect_percent + death_percent + v_serious);
 	if(death_percent == 100) Contribute_to_Vaccine = 0;
@@ -52,81 +52,81 @@ void Building::getC2V(double& p){
 void Building::info_update(){
 	building_info.total_pc = building_info.live_pc + building_info.dead_pc;
 	building_info.uninfected_pc = building_info.live_pc - building_info.infected_pc;
-	infect_percent =(double) building_info.infected_pc / building_info.live_pc * 100;	//°¨¿°µÈ percentage
-	death_percent =(double) building_info.dead_pc / building_info.total_pc * 100;		//Á×Àº percentage
+	infect_percent =(double) building_info.infected_pc / building_info.live_pc * 100;	//ê°ì—¼ëœ percentage
+	death_percent =(double) building_info.dead_pc / building_info.total_pc * 100;		//ì£½ì€ percentage
 }
 
-														//¾Æ·¡ºÎÅÍ building³»ºÎ¿¡¼­¸¸ È£ÃâµÇ´Â methodµé
+														//ì•„ë˜ë¶€í„° buildingë‚´ë¶€ì—ì„œë§Œ í˜¸ì¶œë˜ëŠ” methodë“¤
 
 void Building::virus_spread_in_a_building(){
 	double act[4];
-	vs->getInfect(act);	//¹ÙÀÌ·¯½ºÀÇ Àü¿°¼º
+	vs->getInfect(act);	//ë°”ì´ëŸ¬ìŠ¤ì˜ ì „ì—¼ì„±
 	double online_infecting;
 	double offline_infecting;
 	online_infecting = Online_Use*(Activity[0]*act[0] + Activity[1]*act[1] + Activity[2]*act[2] + Activity[3]*act[3]);
-	//Online °¨¿°·®Àº Online »ç¿ë·®°ú pc»ç¿ë Á¤µµ¿Í °öÇØ¼­ °è»ê.
+	//Online ê°ì—¼ëŸ‰ì€ Online ì‚¬ìš©ëŸ‰ê³¼ pcì‚¬ìš© ì •ë„ì™€ ê³±í•´ì„œ ê³„ì‚°.
 	offline_infecting = Offline_Use*(Activity[0]*act[0] + Activity[1]*act[1] + Activity[2]*act[2] + Activity[3]*act[3]);
-	//Offline °¨¿°·®Àº Online »ç¿ë·®°ú pc»ç¿ë Á¤µµ¿Í °öÇØ¼­ °è»ê.
+	//Offline ê°ì—¼ëŸ‰ì€ Online ì‚¬ìš©ëŸ‰ê³¼ pcì‚¬ìš© ì •ë„ì™€ ê³±í•´ì„œ ê³„ì‚°.
 	building_info.infected_pc += (building_info.uninfected_pc * infect_percent * (online_infecting + offline_infecting));
-	//°¨¿°µÇ´Â ¾çÀº °¨¿°µÇÁö ¾Ê´Â pc¼ö¿¡´Ù°¡ ÇöÀç ºôµùÀÇ °¨¿°·ü, ±×¸®°í on/off °¨¿°·®À» °öÇØ¼­ °è»êÇÑ´Ù.
-	//°è»ê ³¡
+	//ê°ì—¼ë˜ëŠ” ì–‘ì€ ê°ì—¼ë˜ì§€ ì•ŠëŠ” pcìˆ˜ì—ë‹¤ê°€ í˜„ì¬ ë¹Œë”©ì˜ ê°ì—¼ë¥ , ê·¸ë¦¬ê³  on/off ê°ì—¼ëŸ‰ì„ ê³±í•´ì„œ ê³„ì‚°í•œë‹¤.
+	//ê³„ì‚° ë
 	info_update();
-	//Á¤º¸ ¾÷µ¥ÀÌÆ®
+	//ì •ë³´ ì—…ë°ì´íŠ¸
 	if((infect_percent+death_percent) >= 3 && infect_level == 0) {infect_level = 1; coin = 1;}
 	else if((infect_percent+death_percent) >= 7 && infect_level == 1) {infect_level = 2; coin = 2;}
 	//....
 	else{ coin = 0;}
-	//percent´Â ÃæºĞÇÏÁö¸¸ levelÀÌ ÃæºĞÄ¡ ¾Ê´Ù¸é coinÀº °ªÀº 0À¸·ÎÇØÁØ´Ù.
+	//percentëŠ” ì¶©ë¶„í•˜ì§€ë§Œ levelì´ ì¶©ë¶„ì¹˜ ì•Šë‹¤ë©´ coinì€ ê°’ì€ 0ìœ¼ë¡œí•´ì¤€ë‹¤.
 	
-	//°¨¿°¿¡ ÀÇÇÑ ÄÚÀÎ ¾÷µ¥ÀÌÆ®
+	//ê°ì—¼ì— ì˜í•œ ì½”ì¸ ì—…ë°ì´íŠ¸
 	if(death_percent >= 3 && death_level == 0) { death_level = 1; coin = 5;}
 	if(death_percent >= 7 && death_level == 1) { death_level = 2; coin = 10;}
 	else{ coin = 0;}
-	//Á×À½¿¡ ÀÇÇÑ ÄÚÀÎ ¾÷µ¥ÀÌÆ®
+	//ì£½ìŒì— ì˜í•œ ì½”ì¸ ì—…ë°ì´íŠ¸
 }
 
 void Building::virus_spread_through_all_buildings(){
 	srand(time(NULL));
-	double going_live_pc;							//ÀÌµ¿ÇÏ´Â ÃÑ pc¼ö
-	double going_infected_pc = 0;					//ÀÌµ¿ÇÏ´Â °¨¿°µÈ pc¼ö
-	double livepc_of_to;							//toÀÇ ÃÑ pc¼ö
-	double infectedpc_of_to;						//toÀÇ °¨¿°µÈ pc¼ö
-	double pc=1,act1=2,act2=1,act3=2,act4=1;		//¹ë·±½º Á¶Á¤¿ë.
-	int check[B_NUMBER] = {0};						//ÀÓÀÇ·Î ºôµùµéÀ» °¡¸®ÄÑ pc°¡ ÀÌµ¿ÇÑ´Ù. 1ÀÌ¸é ÀÌ¹Ì ÀÌµ¿À» Çß´Ù´Â ¶æÀÌ´Ù.
-	int random_index;								//ÀÓÀÇ·Î ÀÌµ¿ÇÒ ºôµùÀÇ index. ¸Å¹ø¹Ù²ï´Ù.
-	int random_going;								//°¨¿°µÈ pc ÇÏ³ª°¡ ÀÌµ¿ÇÒ È®·ü°è»êÀ» À§ÇÑ º¯¼ö
-	double probability_of_going;					//°¨¿°µÈ pc ÇÏ³ª°¡ ÀÌµ¿ÇÒ È®·ü
+	double going_live_pc;							//ì´ë™í•˜ëŠ” ì´ pcìˆ˜
+	double going_infected_pc = 0;					//ì´ë™í•˜ëŠ” ê°ì—¼ëœ pcìˆ˜
+	double livepc_of_to;							//toì˜ ì´ pcìˆ˜
+	double infectedpc_of_to;						//toì˜ ê°ì—¼ëœ pcìˆ˜
+	double pc=1,act1=2,act2=1,act3=2,act4=1;		//ë°¸ëŸ°ìŠ¤ ì¡°ì •ìš©.
+	int check[B_NUMBER] = {0};						//ì„ì˜ë¡œ ë¹Œë”©ë“¤ì„ ê°€ë¦¬ì¼œ pcê°€ ì´ë™í•œë‹¤. 1ì´ë©´ ì´ë¯¸ ì´ë™ì„ í–ˆë‹¤ëŠ” ëœ»ì´ë‹¤.
+	int random_index;								//ì„ì˜ë¡œ ì´ë™í•  ë¹Œë”©ì˜ index. ë§¤ë²ˆë°”ë€ë‹¤.
+	int random_going;								//ê°ì—¼ëœ pc í•˜ë‚˜ê°€ ì´ë™í•  í™•ë¥ ê³„ì‚°ì„ ìœ„í•œ ë³€ìˆ˜
+	double probability_of_going;					//ê°ì—¼ëœ pc í•˜ë‚˜ê°€ ì´ë™í•  í™•ë¥ 
 	for(int i=0; i<B_NUMBER; i++){
-		if(i==building_info.building_index) continue;	//ÀÚ±âÀÚ½ÅÀÌ¸é ¶Ù¾î³Ñ´Â´Ù.
+		if(i==building_info.building_index) continue;	//ìê¸°ìì‹ ì´ë©´ ë›°ì–´ë„˜ëŠ”ë‹¤.
 		do{
 			random_index = rand() % B_NUMBER;
-		}while(check[random_index] != 0);			//ÀÌ¹Ì ÀÌµ¿ÇÑ ºôµùÀÌ¸é ´Ù½Ã °ñ¶óÁØ´Ù.
-		check[random_index] = 1;					//°ñ¶óÁØ ºôµùÀº Ç¥½ÃÇØÁØ´Ù.
+		}while(check[random_index] != 0);			//ì´ë¯¸ ì´ë™í•œ ë¹Œë”©ì´ë©´ ë‹¤ì‹œ ê³¨ë¼ì¤€ë‹¤.
+		check[random_index] = 1;					//ê³¨ë¼ì¤€ ë¹Œë”©ì€ í‘œì‹œí•´ì¤€ë‹¤.
 		going_live_pc = (interact[0][random_index] + interact[1][random_index]) * building_info.live_pc;
-		//´Ù¸¥ ºôµù°úÀÇ »óÈ£ÀÛ¿ë Á¤µµ¿¡ ÀÇÇØ Àü´ŞµÇ´Â pc¼ö°¡ Á¤ÇØÁø´Ù.
+		//ë‹¤ë¥¸ ë¹Œë”©ê³¼ì˜ ìƒí˜¸ì‘ìš© ì •ë„ì— ì˜í•´ ì „ë‹¬ë˜ëŠ” pcìˆ˜ê°€ ì •í•´ì§„ë‹¤.
 		for(int i=0; i<going_live_pc; i++){
 			random_going = rand() % building_info.live_pc;
 			probability_of_going = (double) random_going / building_info.live_pc;
 			if(probability_of_going <= infect_percent) going_infected_pc++;
 		}
-		//ÇöÀç ºôµùÀÇ °¨¿°·üÀÇ È®·ü¸¸Å­ °¨¿°µÈ pc°¡ ÀÌµ¿ÇÑ´Ù.
-		//¿¹¸¦ µé¾î 20%°¡ °¨¿°µÇ¾î ÀÖÀ¸¸é, ÇÑ pc°¡ ³Ñ¾î°¥ ¶§ ±× pc°¡ °¨¿°µÈ pcÀÏ È®·üÀÌ 20%ÀÎ °ÍÀÌ´Ù.
-		this->setInfectedpc(this->building_info.infected_pc - going_infected_pc);	//±âÁ¸¿¡ ÀÖ´ø ºôµù¿¡¼­ °¨¿°µÈ pc°¡ ºüÁ®³ª°£´Ù.
-		this->setLivepc(this->building_info.live_pc - going_live_pc);				//±âÁ¸¿¡ ÀÖ´ø ºôµù¿¡¼­ ÀüÃ¼ pc(°¨¿°µÈ°Í+¾ÈµÈ°Í)°¡ ºüÁ®³ª°£´Ù.
+		//í˜„ì¬ ë¹Œë”©ì˜ ê°ì—¼ë¥ ì˜ í™•ë¥ ë§Œí¼ ê°ì—¼ëœ pcê°€ ì´ë™í•œë‹¤.
+		//ì˜ˆë¥¼ ë“¤ì–´ 20%ê°€ ê°ì—¼ë˜ì–´ ìˆìœ¼ë©´, í•œ pcê°€ ë„˜ì–´ê°ˆ ë•Œ ê·¸ pcê°€ ê°ì—¼ëœ pcì¼ í™•ë¥ ì´ 20%ì¸ ê²ƒì´ë‹¤.
+		this->setInfectedpc(this->building_info.infected_pc - going_infected_pc);	//ê¸°ì¡´ì— ìˆë˜ ë¹Œë”©ì—ì„œ ê°ì—¼ëœ pcê°€ ë¹ ì ¸ë‚˜ê°„ë‹¤.
+		this->setLivepc(this->building_info.live_pc - going_live_pc);				//ê¸°ì¡´ì— ìˆë˜ ë¹Œë”©ì—ì„œ ì „ì²´ pc(ê°ì—¼ëœê²ƒ+ì•ˆëœê²ƒ)ê°€ ë¹ ì ¸ë‚˜ê°„ë‹¤.
 		info_update();
-		//fromÀÇ ÀÌµ¿ ÈÄ º¯È­ÇÑ total pc¼ö¸¦ updateÇØÁØ´Ù.
-		building_list[random_index]->getInfectedpc(infectedpc_of_to);				//to ºôµùÀÇ °¨¿°µÈ pc¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
+		//fromì˜ ì´ë™ í›„ ë³€í™”í•œ total pcìˆ˜ë¥¼ updateí•´ì¤€ë‹¤.
+		building_list[random_index]->getInfectedpc(infectedpc_of_to);				//to ë¹Œë”©ì˜ ê°ì—¼ëœ pcìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
 		building_list[random_index]->setInfectedpc(infectedpc_of_to + going_infected_pc);
-		building_list[random_index]->getLivepc(livepc_of_to);						//toºôµùÀÇ pc¼ö¸¦ ¹Ş¾Æ¿Â´Ù.
-		building_list[random_index]->setLivepc(livepc_of_to + going_live_pc);		//toÀÇ ºôµù¿¡´Â ±âÁ¸ pc¼ö¿¡´Ù°¡ this¿¡¼­ ºüÁ®³ª°£¸¸Å­ pc¸¦ Ãß°¡ÇØÁØ´Ù.
-		//toÀÇ ÀÌµ¿ ÈÄ º¯È­ÇÑ total pc¼ö¸¦ updateÇØÁØ´Ù.
+		building_list[random_index]->getLivepc(livepc_of_to);						//toë¹Œë”©ì˜ pcìˆ˜ë¥¼ ë°›ì•„ì˜¨ë‹¤.
+		building_list[random_index]->setLivepc(livepc_of_to + going_live_pc);		//toì˜ ë¹Œë”©ì—ëŠ” ê¸°ì¡´ pcìˆ˜ì—ë‹¤ê°€ thisì—ì„œ ë¹ ì ¸ë‚˜ê°„ë§Œí¼ pcë¥¼ ì¶”ê°€í•´ì¤€ë‹¤.
+		//toì˜ ì´ë™ í›„ ë³€í™”í•œ total pcìˆ˜ë¥¼ updateí•´ì¤€ë‹¤.
 		building_list[random_index]->info_update();
 	}	
 }
 
 void Building::infected_to_death(){
 	double act[3];
-	double kill=0;	//Á×ÀÌ´Â Á¤µµ
+	double kill=0;	//ì£½ì´ëŠ” ì •ë„
 	vs->getDestroy(act);
 	for(int i=0; i<3; i++){kill += act[i] * Security[i];}
 	building_info.dead_pc = kill*building_info.infected_pc;

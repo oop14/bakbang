@@ -1,4 +1,4 @@
-#ifndef OOP_AI
+ï»¿#ifndef OOP_AI
 #define OOP_AI
 #include "building.h"
 #include "vaccine.h"
@@ -7,36 +7,36 @@ private:
 	Building* building_list[B_NUMBER];
 	Vaccine* vc;
 	VirusStatus* vs;
-	bool infected_building[B_NUMBER];		//°¨¿°µÈ ºôµùµé. °ªÀÌ trueÀÌ¸é °¨¿°µÈ °ÍÀÌ´Ù.
-	bool uninfected_building[B_NUMBER];		//°¨¿°µÇÁö ¾ÊÀº ºôµùµé. °ªÀÌ trueÀÌ¸é °¨¿°µÈ °ÍÀÌ´Ù.
-	bool dead_building[B_NUMBER];			//Á×Àº ºôµùµé. °ªÀÌ trueÀÌ¸é °¨¿°µÈ °ÍÀÌ´Ù.
-	bool blocked_building[2][B_NUMBER];		//ÇÑ ºôµùÀÌ °¨¿°Á¤µµ°¡ ¸Å¿ì ½ÉÇÏ¸é, ±× ºôµùÀº Blocked Ã³¸®µÈ´Ù. Ã³¸®´Â On/Off µÎ °¡Áö °æ¿ì°¡ ÀÖ´Ù.
-											//¸¸¾à OnÀÌ Blocked Ã³¸®µÇ¸é, ±× ºôµùÀ¸·Î´Â OnlineÀ» ÅëÇÑ °¨¿°ÀÌ ¾ÈµÇ°í 
-											//±× ºôµù¿¡¼­ ´Ù¸¥ °÷À¸·Î ÆÛÁöÁöµµ ¾Ê´Â´Ù. °ªÀÌ trueÀÌ¸é blockµÈ °ÍÀÌ´Ù.
+	bool infected_building[B_NUMBER];		//ê°ì—¼ëœ ë¹Œë”©ë“¤. ê°’ì´ trueì´ë©´ ê°ì—¼ëœ ê²ƒì´ë‹¤.
+	bool uninfected_building[B_NUMBER];		//ê°ì—¼ë˜ì§€ ì•Šì€ ë¹Œë”©ë“¤. ê°’ì´ trueì´ë©´ ê°ì—¼ëœ ê²ƒì´ë‹¤.
+	bool dead_building[B_NUMBER];			//ì£½ì€ ë¹Œë”©ë“¤. ê°’ì´ trueì´ë©´ ê°ì—¼ëœ ê²ƒì´ë‹¤.
+	bool blocked_building[2][B_NUMBER];		//í•œ ë¹Œë”©ì´ ê°ì—¼ì •ë„ê°€ ë§¤ìš° ì‹¬í•˜ë©´, ê·¸ ë¹Œë”©ì€ Blocked ì²˜ë¦¬ëœë‹¤. ì²˜ë¦¬ëŠ” On/Off ë‘ ê°€ì§€ ê²½ìš°ê°€ ìˆë‹¤.
+											//ë§Œì•½ Onì´ Blocked ì²˜ë¦¬ë˜ë©´, ê·¸ ë¹Œë”©ìœ¼ë¡œëŠ” Onlineì„ í†µí•œ ê°ì—¼ì´ ì•ˆë˜ê³  
+											//ê·¸ ë¹Œë”©ì—ì„œ ë‹¤ë¥¸ ê³³ìœ¼ë¡œ í¼ì§€ì§€ë„ ì•ŠëŠ”ë‹¤. ê°’ì´ trueì´ë©´ blockëœ ê²ƒì´ë‹¤.
 
-	double vac_max;							//vaccineÀÇ max°ª
-	double vac_point;						//vaccineÀÇ ÇöÀç °³¹ßÁ¤µµ
-	double sum_total_pc;					//¸ğµç ºôµùÀÇ pc¼öµéÀ» ÇÕÇÑ°ª
-	double sum_infected_pc;					//¸ğµç ºôµùÀÇ °¨¿°µÈ pc¼öµéÀ» ÇÕÇÑ°ª
-	double sum_uninfected_pc;				//¸ğµç ºôµùÀÇ °¨¿°µÇÁö ¾ÊÀº pc¼öµéÀ» ÇÕÇÑ°ª
-	double sum_dead_pc;						//¸ğµç ºôµùÀÇ Á×Àº pc¼öµéÀ» ÇÕÇÑ°ª
-	double sum_live_pc;						//¸ğµç ºôµùÀÇ »ì¾ÆÀÖ´Â pc¼öµéÀ» ÇÕÇÑ°ª
-	double vaccine_developing;				//¹é½ÅÀÌ °³¹ßµÇ´Â Á¤µµ. ÀÌ ¼ıÀÚ¸¦ ³Ñ¾î°¡¸é ¹é½ÅÀ» °³¹ßÇÏ±â ½ÃÀÛÇÑ´Ù.
-	double online_block[B_NUMBER];			//°¢ ºôµùÀÇ onlineÀ¸·Î ÆÛÁö´Â ÃÖ´ëÇÑ°èÄ¡. ÀÌ °ªÀ» ³Ñ¾î°¡¸é ±× ºôµùÀ¸·Î´Â onlineÀ» ÅëÇÑ ÀÌµ¿ÀÌ ¾ø¾îÁø´Ù.
-											//Áï, ÀÌ °ªÀÌ Å¬ ¼ö·Ï ºôµùÀº ¹ÙÀÌ·¯½º¿¡ ¼Ò±ØÀûÀÎ ´ëÃ³¸¦ ÇÑ´Ù.
-	double online_blocking_control[4];		//onlineÀ¸·Î ÆÛÁö´Â Á¤µµ¸¦ °è»êÇØÁÙ º¯¼ö
-	double offline_block[B_NUMBER];			//°¢ ºôµùÀÇ offlineÀ¸·Î ÆÛÁö´Â ÃÖ´ëÇÑ°èÄ¡. ÀÌ °ªÀ» ³Ñ¾î°¡¸é ±× ºôµùÀ¸·Î´Â offlineÀ» ÅëÇÑ ÀÌµ¿ÀÌ ¾ø¾îÁø´Ù.
-											//Áï, ÀÌ °ªÀÌ Å¬ ¼ö·Ï ºôµùÀº ¹ÙÀÌ·¯½º¿¡ ¼Ò±ØÀûÀÎ ´ëÃ³¸¦ ÇÑ´Ù.
-	double offline_blocking_control[4];		//offlineÀ¸·Î ÆÛÁö´Â Á¤µµ¸¦ °è»êÇØÁÙ º¯¼ö
+	double vac_max;							//vaccineì˜ maxê°’
+	double vac_point;						//vaccineì˜ í˜„ì¬ ê°œë°œì •ë„
+	double sum_total_pc;					//ëª¨ë“  ë¹Œë”©ì˜ pcìˆ˜ë“¤ì„ í•©í•œê°’
+	double sum_infected_pc;					//ëª¨ë“  ë¹Œë”©ì˜ ê°ì—¼ëœ pcìˆ˜ë“¤ì„ í•©í•œê°’
+	double sum_uninfected_pc;				//ëª¨ë“  ë¹Œë”©ì˜ ê°ì—¼ë˜ì§€ ì•Šì€ pcìˆ˜ë“¤ì„ í•©í•œê°’
+	double sum_dead_pc;						//ëª¨ë“  ë¹Œë”©ì˜ ì£½ì€ pcìˆ˜ë“¤ì„ í•©í•œê°’
+	double sum_live_pc;						//ëª¨ë“  ë¹Œë”©ì˜ ì‚´ì•„ìˆëŠ” pcìˆ˜ë“¤ì„ í•©í•œê°’
+	double vaccine_developing;				//ë°±ì‹ ì´ ê°œë°œë˜ëŠ” ì •ë„. ì´ ìˆ«ìë¥¼ ë„˜ì–´ê°€ë©´ ë°±ì‹ ì„ ê°œë°œí•˜ê¸° ì‹œì‘í•œë‹¤.
+	double online_block[B_NUMBER];			//ê° ë¹Œë”©ì˜ onlineìœ¼ë¡œ í¼ì§€ëŠ” ìµœëŒ€í•œê³„ì¹˜. ì´ ê°’ì„ ë„˜ì–´ê°€ë©´ ê·¸ ë¹Œë”©ìœ¼ë¡œëŠ” onlineì„ í†µí•œ ì´ë™ì´ ì—†ì–´ì§„ë‹¤.
+											//ì¦‰, ì´ ê°’ì´ í´ ìˆ˜ë¡ ë¹Œë”©ì€ ë°”ì´ëŸ¬ìŠ¤ì— ì†Œê·¹ì ì¸ ëŒ€ì²˜ë¥¼ í•œë‹¤.
+	double online_blocking_control[4];		//onlineìœ¼ë¡œ í¼ì§€ëŠ” ì •ë„ë¥¼ ê³„ì‚°í•´ì¤„ ë³€ìˆ˜
+	double offline_block[B_NUMBER];			//ê° ë¹Œë”©ì˜ offlineìœ¼ë¡œ í¼ì§€ëŠ” ìµœëŒ€í•œê³„ì¹˜. ì´ ê°’ì„ ë„˜ì–´ê°€ë©´ ê·¸ ë¹Œë”©ìœ¼ë¡œëŠ” offlineì„ í†µí•œ ì´ë™ì´ ì—†ì–´ì§„ë‹¤.
+											//ì¦‰, ì´ ê°’ì´ í´ ìˆ˜ë¡ ë¹Œë”©ì€ ë°”ì´ëŸ¬ìŠ¤ì— ì†Œê·¹ì ì¸ ëŒ€ì²˜ë¥¼ í•œë‹¤.
+	double offline_blocking_control[4];		//offlineìœ¼ë¡œ í¼ì§€ëŠ” ì •ë„ë¥¼ ê³„ì‚°í•´ì¤„ ë³€ìˆ˜
 public:
 	AI(Building** _building_list){
 		for(int i =0; i<B_NUMBER; i++) building_list[i] = _building_list[i];
-		sum_total_pc = 0;					//¸ğµç ºôµùÀÇ pc¼öµéÀ» ÇÕÇÑ°ª
-		sum_infected_pc = 0;				//¸ğµç ºôµùÀÇ °¨¿°µÈ pc¼öµéÀ» ÇÕÇÑ°ª
-		sum_uninfected_pc = 0;				//¸ğµç ºôµùÀÇ °¨¿°µÇÁö ¾ÊÀº pc¼öµéÀ» ÇÕÇÑ°ª
-		sum_dead_pc = 0;					//¸ğµç ºôµùÀÇ Á×Àº pc¼öµéÀ» ÇÕÇÑ°ª
-		sum_live_pc = 0;					//¸ğµç ºôµùÀÇ »ì¾ÆÀÖ´Â pc¼öµéÀ» ÇÕÇÑ°ª
-											//¾Æ·¡´Â blocking º¯¼ö ¼³Á¤.
+		sum_total_pc = 0;					//ëª¨ë“  ë¹Œë”©ì˜ pcìˆ˜ë“¤ì„ í•©í•œê°’
+		sum_infected_pc = 0;				//ëª¨ë“  ë¹Œë”©ì˜ ê°ì—¼ëœ pcìˆ˜ë“¤ì„ í•©í•œê°’
+		sum_uninfected_pc = 0;				//ëª¨ë“  ë¹Œë”©ì˜ ê°ì—¼ë˜ì§€ ì•Šì€ pcìˆ˜ë“¤ì„ í•©í•œê°’
+		sum_dead_pc = 0;					//ëª¨ë“  ë¹Œë”©ì˜ ì£½ì€ pcìˆ˜ë“¤ì„ í•©í•œê°’
+		sum_live_pc = 0;					//ëª¨ë“  ë¹Œë”©ì˜ ì‚´ì•„ìˆëŠ” pcìˆ˜ë“¤ì„ í•©í•œê°’
+											//ì•„ë˜ëŠ” blocking ë³€ìˆ˜ ì„¤ì •.
 		online_blocking_control[0] = 10;
 		online_blocking_control[1] = 7;
 		online_blocking_control[2] = 2;
@@ -46,11 +46,11 @@ public:
 		offline_blocking_control[2] = 7;
 		offline_blocking_control[3] = 0;
 	}
-															//get methodµé
+															//get methodë“¤
 
 												
-	void getVM_from_VirusStatus(){vs->getVacMax(vac_max);}			//virusstatus·ÎºÎÅÍ vaccineÀÇ max°ªÀ» °¡Á®¿Â´Ù.
-	void getVP_from_Vaccine(){vc->getVaccine(vac_point);}			//vaccineÀ¸·ÎºÎÅÍ ÇöÀç vaccine°ªÀ» °¡Á®¿Â´Ù.
+	void getVM_from_VirusStatus(){vs->getVacMax(vac_max);}			//virusstatusë¡œë¶€í„° vaccineì˜ maxê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
+	void getVP_from_Vaccine(){vc->getVaccine(vac_point);}			//vaccineìœ¼ë¡œë¶€í„° í˜„ì¬ vaccineê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
 	void getVM(double& vm){vm = vac_max;}
 	void getVP(double& vp){vp = vac_point;}
 	void getSum_total_pc(double& pc);
@@ -59,16 +59,16 @@ public:
 	void getSum_dead_pc(double& pc);
 	void getSum_live_pc(double& pc);
 
-															//³ª¸ÓÁö methodµé
+															//ë‚˜ë¨¸ì§€ methodë“¤
 
-	void block_checking(Building* b);		//ÇÑ ºôµùÀÇ °¨¿° ¹× Á×À½ Á¤µµ¿Í ¹ÙÀÌ·¯½ºÀÇ ½É°¢¼ºÀ» °í·ÁÇØ ´Ù¸¥ ºôµù°úÀÇ ±³·ù Á¤µµ¸¦ controlÇÑ´Ù.
-	void intialize_pc();					//´ÙÀ½ ÅÏÀ» À§ÇØ pcÁ¤º¸ÀÇ ÇÕÀ» ÃÊ±âÈ­ÇÑ´Ù.
-	void gather_info();						//¸ğµç buildingÀÇ Á¤º¸¸¦ ¸ğÀº´Ù.
-	void setEach_Building_Information();	//°¢ ºôµùµéÀÇ Á¤º¸¸¦ Åä´ë·Î °¨¿° ¹× ÆÄ±«¿©ºÎ, block¿©ºÎ¸¦ ¼³Á¤ÇØÁØ´Ù.
+	void block_checking(Building* b);		//í•œ ë¹Œë”©ì˜ ê°ì—¼ ë° ì£½ìŒ ì •ë„ì™€ ë°”ì´ëŸ¬ìŠ¤ì˜ ì‹¬ê°ì„±ì„ ê³ ë ¤í•´ ë‹¤ë¥¸ ë¹Œë”©ê³¼ì˜ êµë¥˜ ì •ë„ë¥¼ controlí•œë‹¤.
+	void intialize_pc();					//ë‹¤ìŒ í„´ì„ ìœ„í•´ pcì •ë³´ì˜ í•©ì„ ì´ˆê¸°í™”í•œë‹¤.
+	void gather_info();						//ëª¨ë“  buildingì˜ ì •ë³´ë¥¼ ëª¨ì€ë‹¤.
+	void setEach_Building_Information();	//ê° ë¹Œë”©ë“¤ì˜ ì •ë³´ë¥¼ í† ëŒ€ë¡œ ê°ì—¼ ë° íŒŒê´´ì—¬ë¶€, blockì—¬ë¶€ë¥¼ ì„¤ì •í•´ì¤€ë‹¤.
 	void building_called(int index, char* _name, double& _uninfected, double& _infected, double& _dead, bool& on_block, bool& off_block);
-											//Engine¿¡¼­ Æ¯Á¤ ºôµùÀÇ Á¤º¸¸¦ callÇÒ °æ¿ì Ãâ·ÂÀ» À§ÇØ ½ÇÇàÇÏ´Â method.
+											//Engineì—ì„œ íŠ¹ì • ë¹Œë”©ì˜ ì •ë³´ë¥¼ callí•  ê²½ìš° ì¶œë ¥ì„ ìœ„í•´ ì‹¤í–‰í•˜ëŠ” method.
 	void AI_calle();
-											//ÀüÃ¼ Á¤º¸¸¦ Ãâ·ÂÇÏ±â À§ÇØ ½ÇÇàÇÏ´Â method.
+											//ì „ì²´ ì •ë³´ë¥¼ ì¶œë ¥í•˜ê¸° ìœ„í•´ ì‹¤í–‰í•˜ëŠ” method.
 };
 
 

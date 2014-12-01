@@ -1,5 +1,5 @@
-#include "AI.h"
-												//getµé
+ï»¿#include "AI.h"
+												//getë“¤
 void AI::getSum_total_pc(double& pc){
 	pc = sum_total_pc;
 }
@@ -20,7 +20,7 @@ void AI::getSum_live_pc(double& pc){
 	pc = sum_live_pc;
 }
 
-												//getµé ³¡
+												//getë“¤ ë
 void AI::intialize_pc(){
 	sum_total_pc = 0;
 	sum_infected_pc = 0;
@@ -53,26 +53,26 @@ void AI::setEach_Building_Information(){
 		else if(temp_info.infected_pc > 0) {infected_building[i] = true; uninfected_building[i] = false;}
 		if(temp_info.dead_pc == 0) dead_building[i] = false;
 		else if(temp_info.dead_pc > 0) dead_building[i] = true;
-												//°¨¿°¾ÈµÈ buildingµé°ú °¨¿°µÈ buildingµé°ú Á×Àº buildingµé Ã³¸®¿Ï·á
+												//ê°ì—¼ì•ˆëœ buildingë“¤ê³¼ ê°ì—¼ëœ buildingë“¤ê³¼ ì£½ì€ buildingë“¤ ì²˜ë¦¬ì™„ë£Œ
 		block_checking(building_list[i]);		
-												//ºôµùÀÇ °¨¿° ¹× Á×À½ Á¤µµ¿Í ¹ÙÀÌ·¯½ºÀÇ ½É°¢¼º¿¡ µû¶ó ¹é½Å °³¹ß½ÃÀÛ ¿©ºÎµµ ÆÇ´ÜÇÏ¸ç 
-												//±× ºôµù¿¡ ´ëÇÑ ±³·ùµµ ÁÙÀÌ°Å³ª ÇÑ´Ù.
+												//ë¹Œë”©ì˜ ê°ì—¼ ë° ì£½ìŒ ì •ë„ì™€ ë°”ì´ëŸ¬ìŠ¤ì˜ ì‹¬ê°ì„±ì— ë”°ë¼ ë°±ì‹  ê°œë°œì‹œì‘ ì—¬ë¶€ë„ íŒë‹¨í•˜ë©° 
+												//ê·¸ ë¹Œë”©ì— ëŒ€í•œ êµë¥˜ë„ ì¤„ì´ê±°ë‚˜ í•œë‹¤.
 	}
 }
 
 void AI::block_checking(Building* b){
-	double building_serious = 0;				//ºôµùÀÇ °¨¿° ¹× Á×À½ Á¤µµ¸¦ º¸°í, ±× ºôµù°ú ´Ù¸¥ ºôµù°úÀÇ »óÈ£ÀÛ¿ëÀ» controlÇØÁØ´Ù.
-												//¸¸¾à ÀÏÁ¤¼öÁØ ÀÌ»óÀ¸·Î ½É°¢ÇØÁö¸é, ±× ºôµù¿¡ ´ëÇÑ ±³·ù´Â ¸ğµÎ ²÷¾î¼­ ±× ºôµùÀº ³»ºÎ¿¡¼­¸¸ °¨¿° ¹× Á×À½ÀÌ ÆÛÁö°Ô ÇÑ´Ù.
-	double building_infected_percent = 0;		//ºôµùÀÇ °¨¿°·ü
-	double building_death_percent = 0;			//ºôµùÀÇ Á×À½·ü
-	double virus_serious = 0;					//¹ÙÀÌ·¯½º ½É°¢¼º
-	double* temp_interact[2];					//°¢ ºôµùµéÀÇ ¼­·Î »óÈ£ÀÛ¿ë¼º
+	double building_serious = 0;				//ë¹Œë”©ì˜ ê°ì—¼ ë° ì£½ìŒ ì •ë„ë¥¼ ë³´ê³ , ê·¸ ë¹Œë”©ê³¼ ë‹¤ë¥¸ ë¹Œë”©ê³¼ì˜ ìƒí˜¸ì‘ìš©ì„ controlí•´ì¤€ë‹¤.
+												//ë§Œì•½ ì¼ì •ìˆ˜ì¤€ ì´ìƒìœ¼ë¡œ ì‹¬ê°í•´ì§€ë©´, ê·¸ ë¹Œë”©ì— ëŒ€í•œ êµë¥˜ëŠ” ëª¨ë‘ ëŠì–´ì„œ ê·¸ ë¹Œë”©ì€ ë‚´ë¶€ì—ì„œë§Œ ê°ì—¼ ë° ì£½ìŒì´ í¼ì§€ê²Œ í•œë‹¤.
+	double building_infected_percent = 0;		//ë¹Œë”©ì˜ ê°ì—¼ë¥ 
+	double building_death_percent = 0;			//ë¹Œë”©ì˜ ì£½ìŒë¥ 
+	double virus_serious = 0;					//ë°”ì´ëŸ¬ìŠ¤ ì‹¬ê°ì„±
+	double* temp_interact[2];					//ê° ë¹Œë”©ë“¤ì˜ ì„œë¡œ ìƒí˜¸ì‘ìš©ì„±
 	b->getInfectPercent(building_infected_percent);
 	b->getDeathPercent(building_death_percent);
 	b->getInteract(temp_interact);
 	vs->getSerious(virus_serious);
 	building_serious = building_infected_percent + (building_death_percent + virus_serious)*5;
-	if(building_serious > 150)/*½É°¢Á¤µµ*/{
+	if(building_serious > 150)/*ì‹¬ê°ì •ë„*/{
 		for(int j=0; j<B_NUMBER; j++){
 			
 		}
@@ -82,10 +82,10 @@ void AI::block_checking(Building* b){
 void AI::building_called(int index, char* _name, double& _uninfected, double& _infected, double& _dead, bool& on_block, bool& off_block){
 	Building_Information temp_info;
 	building_list[index]->getInformation(&temp_info);
-	building_list[index]->getName(_name);		//ÀÌ¸§ Àü´Ş	
-	_uninfected = temp_info.uninfected_pc;		//°¨¿°µÇÁö ¾ÊÀº pcÀü´Ş
-	_infected = temp_info.infected_pc;			//°¨¿°µÈ pcÀü´Ş
-	_dead = temp_info.dead_pc;					//Á×Àº pcÀü´Ş
-	on_block = blocked_building[0][index];		//onlineÀÇ block¿©ºÎ Àü´Ş
-	off_block = blocked_building[1][index];		//offlineÀÇ block¿©ºÎ Àü´Ş
+	building_list[index]->getName(_name);		//ì´ë¦„ ì „ë‹¬	
+	_uninfected = temp_info.uninfected_pc;		//ê°ì—¼ë˜ì§€ ì•Šì€ pcì „ë‹¬
+	_infected = temp_info.infected_pc;			//ê°ì—¼ëœ pcì „ë‹¬
+	_dead = temp_info.dead_pc;					//ì£½ì€ pcì „ë‹¬
+	on_block = blocked_building[0][index];		//onlineì˜ blockì—¬ë¶€ ì „ë‹¬
+	off_block = blocked_building[1][index];		//offlineì˜ blockì—¬ë¶€ ì „ë‹¬
 }
