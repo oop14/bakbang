@@ -31,6 +31,7 @@ private:
 public:
 	AI(Building** _building_list){
 		for(int i =0; i<B_NUMBER; i++) building_list[i] = _building_list[i];
+		
 		sum_total_pc = 0;					//모든 빌딩의 pc수들을 합한값
 		sum_infected_pc = 0;				//모든 빌딩의 감염된 pc수들을 합한값
 		sum_uninfected_pc = 0;				//모든 빌딩의 감염되지 않은 pc수들을 합한값

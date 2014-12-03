@@ -66,17 +66,73 @@ void AI::block_checking(Building* b){
 	double building_infected_percent = 0;		//빌딩의 감염률
 	double building_death_percent = 0;			//빌딩의 죽음률
 	double virus_serious = 0;					//바이러스 심각성
-	double* temp_interact[2];					//각 빌딩들의 서로 상호작용성
+	double* building_interact[2];				//현재 선택된 빌딩의 다른 빌딩들과의 상호작용성
+	double* temp_interact[2];					//다른 빌딩들의 상호작용성을 임시로 저장할 변수
+	int building_index;							//현재 선택된 building의 index를 가져온다.
 	b->getInfectPercent(building_infected_percent);
 	b->getDeathPercent(building_death_percent);
-	b->getInteract(temp_interact);
+	b->getInteract(building_interact);
 	vs->getSerious(virus_serious);
+	b->getIndex(building_index);
+
 	building_serious = building_infected_percent + (building_death_percent + virus_serious)*5;
-	if(building_serious > 150)/*심각정도*/{
-		for(int j=0; j<B_NUMBER; j++){
-			
+	//심각성 계산
+
+	if(building_serious >= online_block[building_index]){
+		for(int i=0; i<B_NUMBER; i++){
+			building_interact[0][i] = 0;
+			if(i == building_index) continue;										//현재 빌딩하고 같아지면 넘어간다.
+			building_list[i]->getInteract(temp_interact);
+			temp_interact[0][building_index] = 0;
+		}
+		blocked_building[0][building_index] = true;
+	}
+
+	if(150 < building_serious && building_serious < 180)/*심각정도 1*/{
+		for(int i=0; i<B_NUMBER; i++){
+			building_interact[0][i] = building_interact[0][i]-1;						//현재빌딩에서 다른 빌딩으로 Online을통해 퍼지는 정도를 낮춘다.
+			building_interact[1][i] = building_interact[1][i]-1;						//현재빌딩에서 다른 빌딩으로 Offline을통해 퍼지는 정도를 낮춘다.
+			if(i == building_index) continue;										//현재 빌딩하고 같아지면 넘어간다.
+			building_list[i]->getInteract(temp_interact);
+			temp_interact[0][building_index] = temp_interact[0][building_index]-1;	//다른 빌딩에서 현재 빌딩으로 Online을 통해 퍼지는 정도를 낮춘다.
+			temp_interact[1][building_index] = temp_interact[1][building_index]-1;	//다른 빌딩에서 현재 빌딩으로 Offline을 통해 퍼지는 정도를 낮춘다.
 		}
 	}
+	if(180 < building_serious && building_serious < 220)/*심각정도 2*/{
+		for(int i=0; i<B_NUMBER; i++){
+			building_interact[0][i] = building_interact[0][i]-2;						//현재빌딩에서 다른 빌딩으로 Online을통해 퍼지는 정도를 낮춘다.
+			building_interact[1][i] = building_interact[1][i]-2;						//현재빌딩에서 다른 빌딩으로 Offline을통해 퍼지는 정도를 낮춘다.
+			if(i == building_index) continue;										//현재 빌딩하고 같아지면 넘어간다.
+			building_list[i]->getInteract(temp_interact);
+			temp_interact[0][building_index] = temp_interact[0][building_index]-2;	//다른 빌딩에서 현재 빌딩으로 Online을 통해 퍼지는 정도를 낮춘다.
+			temp_interact[1][building_index] = temp_interact[1][building_index]-2;	//다른 빌딩에서 현재 빌딩으로 Offline을 통해 퍼지는 정도를 낮춘다.
+		}
+	}
+
+															/*...레벨 조정...*/
+	int building_to_another_control[2][B_NUMBER] = {0};								//현재 빌딩에서 다른 빌딩으로 가는 상호작용성이 모두 0보다 작은지 판단해줄변수
+	int another_to_building_control[2][B_NUMBER] = {0};								//다른 빌딩에서 현재 빌딩으로 가는 상호작용성이 모두 0보다 작은지 판단해줄변수	
+	for(int i=0; i<B_NUMBER; i++){
+		if(building_interact[0][i] <= 0){ building_interact[0][i] = 0; building_to_another_control[0][i] = 1; }
+		//레벨 조정 후 현재 빌딩에서 다른 빌딩으로 Online을 통한 상호작용성이 0보다 작아지면 0으로 set해준다.
+		if(building_interact[1][i] <= 0){ building_interact[1][i] = 0; building_to_another_control[1][i] = 1; }
+		//레벨 조정 후 현재 빌딩에서 다른 빌딩으로 Offline을 통한 상호작용성이 0보다 작아지면 0으로 set해준다.
+		if(i == building_index) continue;
+		building_list[i]->getInteract(temp_interact);
+		if(temp_interact[0][building_index] <= 0){ temp_interact[0][building_index] = 0; another_to_building_control[0][i] = 1; }
+		//레벨 조정 후 다른 빌딩i에서 현재 빌딩으로 Online을 통한 상호작용성이 0보다 작아지면 0으로 set해준다.
+		if(temp_interact[1][building_index] <= 0){ temp_interact[1][building_index] = 0; another_to_building_control[1][i] = 1; }
+		//레벨 조정 후 다른 빌딩i에서 현재 빌딩으로 Offline을 통한 상호작용성이 0보다 작아지면 0으로 set해준다.
+	}
+	int sum_building_to_another[2] = {0};
+	int sum_another_to_building[2] = {0};
+	for(int i=0; i<B_NUMBER; i++){
+		sum_building_to_another[0] += building_to_another_control[0][i];
+		sum_building_to_another[1] += building_to_another_control[1][i];
+		sum_another_to_building[0] += another_to_building_control[0][i];
+		sum_another_to_building[1] += another_to_building_control[1][i];
+	}
+	if(sum_building_to_another[0] == B_NUMBER && sum_another_to_building[0] == B_NUMBER) 
 }
 
 void AI::building_called(int index, char* _name, double& _uninfected, double& _infected, double& _dead, bool& on_block, bool& off_block){

@@ -1,6 +1,6 @@
 ﻿#ifndef OOP_Building
 #define OOP_Building
-#include "virus.h"
+#include "virusStatus.h"
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
@@ -70,27 +70,39 @@ public:
 		coin = 0;
 	}
 
-													//get,set들
-	void getInteract(double** it){for(int i =0; i<2; i++) it[i] = interact[i];}
-	void setBuildingList(Building** b){for(int i =0; i<B_NUMBER; i++) building_list[i] = b[i];}
-	void getInformation(Building_Information* info);
-	void getName(char* _name){strcpy(_name,name);}
-	void setActivity(int index, double act){Activity[index] = act;}
+													//get,set들	
 	void getActivity(double* act){act = Activity;}
-	void setSecurity(int index, double sec){Security[index] = sec;}
-	void getSecurity(double* sec){sec = Security;}
-	void setOnlinUse(double use){Online_Use = use;}
-	void getInfectPercent(double& ip){ip = infect_percent;}
+	void setActivity(int index, double act){Activity[index] = act;}
+
+	void setBuildingList(Building** b){for(int i =0; i<B_NUMBER; i++) building_list[i] = b[i];}
+
 	void getDeathPercent(double& dp){dp = death_percent;}
+
+	void getIndex(int& id){id = building_info.building_index;}
+	void getInfectPercent(double& ip){ip = infect_percent;}
+	void getInformation(Building_Information* info);
+	void getInteract(double** it){for(int i =0; i<2; i++) it[i] = interact[i];}
+	void setInfectedpc(double ipc);
+	void getInfectedpc(double& ipc);
+
+	void setLivepc(double pc);
+	void getLivepc(double& pc);
+
+	void getName(char* _name){strcpy(_name,name);}
+
+	void setOnlinUse(double use){Online_Use = use;}
 	void getOnlineUse(double& use){use = Online_Use;}
 	void setOfflineUse(double use){Offline_Use = use;}
 	void getOfflineUse(double& use){use = Offline_Use;}
+
+	void setSecurity(int index, double sec){Security[index] = sec;}
+	void getSecurity(double* sec){sec = Security;}
+	
 	void setTotalpc(double pc);
 	void getTotalpc(double& pc);
-	void setLivepc(double pc);
-	void getLivepc(double& pc);
-	void setInfectedpc(double ipc);
-	void getInfectedpc(double& ipc);
+	
+	
+	
 
 													//아래부터 외부에서 호출 될 method들
 	void startedBuilding();
