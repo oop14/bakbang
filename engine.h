@@ -18,7 +18,7 @@
 #include "building.h"
 #include "AI.h"
 
-class engine {
+class Engine {
 private:
     Virus*                  virus;
     std::vector<Building*>  buildings;
@@ -28,8 +28,8 @@ private:
 	int coin;
 public:
     
-	engine() { coin=0;};
-    ~engine();
+	Engine() { coin=0;};
+    ~Engine();
     
 	void initGame();
     void one_step_progress();

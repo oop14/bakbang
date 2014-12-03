@@ -5,10 +5,12 @@
 // Created by So 2014. 11. 17..
 // Copyright (c) So. All rights reserved.
 //
-#include "virusStatus.h"
 
 #ifndef _OOP_proj__virus_
 #define _OOP_proj__virus_
+
+#include "TechTree.h"
+#include "virusStatus.h"
 
 class Virus {
 private:
@@ -23,8 +25,8 @@ public:
 	~Virus();
 	void setDifficulty(int _difficulty, int _sinario);
 
-	void getVirusStatus const(VirusStatus* _Vstatus);
-	void getTechTree const(int index, TechTree* _tree);
+	void getVirusStatus(VirusStatus* _Vstatus);
+	void getTechTree(int index, TechTree* _tree);
 };
 
 #endif _OOP_proj__virus_

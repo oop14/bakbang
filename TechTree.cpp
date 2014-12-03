@@ -20,7 +20,7 @@ TechBlock::~TechBlock() {
 }
 void TechBlock::setCost(int _levelMax, int first_cost) {
 	levelMax = _levelMax;
-	cost = _cost;
+	cost = first_cost;
 }
 void TechBlock::setPreTech(bool* _beforeIndex, TechBlock** _before, int _techNum) {
 	beforeIndex = _beforeIndex;
@@ -32,7 +32,7 @@ void TechBlock::setPreTech(bool* _beforeIndex, TechBlock** _before, int _techNum
 void TechBlock::setIncreaseStatus(VirusStatus _increase) {
 	increase = _increase;
 }
-void TechBlock::getAvailable const(bool& available) {
+void TechBlock::getAvailable(bool& available) {
 	available = false;
 	for(int i=0; i<techNum; i++) {
 		if(beforeIndex[i]) {
@@ -44,18 +44,15 @@ void TechBlock::getAvailable const(bool& available) {
 	}
 	available = true;
 }
-void TechBlock::getCost const(int& _cost) {
+void TechBlock::getCost(int& _cost) {
 	_cost = cost*(1+level);
 }
-void TechBlock::getLevel const(int& _level) {
+void TechBlock::getLevel(int& _level) {
 	_level = level;
 }
-void TechBlock::getName (char* _name) {
-	_name = name;
-}
-void TechBlock::getInfo const(char* _info, double up[3]) {
+void TechBlock::getInfo(char* _name, char* _info, double up[3]) {
 	_info = info;
-	Increase.showData(up);
+	increase.showData(up);
 }
 void TechBlock::upgrade(VirusStatus& Vstatus) {
 	if( level < levelMax )
@@ -63,12 +60,12 @@ void TechBlock::upgrade(VirusStatus& Vstatus) {
 }
 
 
-void TechTree::setStruct(const char** nameArr, const int* costArr, const bool** indexArr, VirusStatus* statArr) {
+void TechTree::setStruct(const char** nameArr,const char** infoArr, const int* costArr, const bool** indexArr, const VirusStatus* statArr) {
 	for(int i=0; i<techNum; i++) {
-		tree[i] = new TechBlock(nameArr[i]);
-		tree[i].setCost(levelMax,cost[i]);
-		tree[i].PreTech(indexArr[i],tree,techNum);
-		tree[i].IncreaseStatus(statArr[i]);
+		tree[i] = new TechBlock(nameArr[i], infoArr[i]);
+		tree[i]->setCost(levelMax,cost[i]);
+		tree[i]->PreTech(indexArr[i],tree,techNum);
+		tree[i]->IncreaseStatus(statArr[i]);
 	}
 }
 void TechTree::getCost(int index, int& cost) {

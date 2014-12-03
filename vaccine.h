@@ -9,6 +9,8 @@
 #ifndef _OOP_proj__vaccine_
 #define _OOP_proj__vaccine_
 
+#include "building.h"
+
 class Virus;
 
 class Vaccine {
@@ -24,7 +26,7 @@ public:
 	};
 	~Vaccine();
 	void do_operation();
-	void getVaccine const(double& current_point, double& speed);
+	void getVaccine(double& current_point, double& speed);
 };
 
 #endif _OOP_proj__vaccine_

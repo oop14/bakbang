@@ -1,5 +1,5 @@
 //
-//  engine.cpp
+//  Engine.cpp
 //  OOP_proj
 //
 //  Created by dblab on 2014. 11. 17..
@@ -8,7 +8,7 @@
 
 #include "engine.h"
 
-void engine::initGame() {
+void Engine::initGame() {
 	virus = new Virus;
 
 	VirusStatus* vs;
@@ -46,11 +46,11 @@ void engine::initGame() {
 	ai = new AI(/*AI가 완성 되면 받을 것*/);
 }
 
-void engine::one_step_progress() {
+void Engine::one_step_progress() {
 
     // process one step of virus propagation in a bulding.
-    for(auto p : buildings) {
-        p->do_operation();
+    for(int i=0; i<B_NUMBER; i++) {
+        buildings[i]->do_operation();
     }
         
     // Vanccine
@@ -67,20 +67,17 @@ void engine::one_step_progress() {
 	// checking AI_Command
 	ai->getCOMMAND();
 */
-    // wait for the next step. (depending on 'speed_of_game')
-    wait_for_next_step();
-
     return;
 }
-void engine::plus_coin(int getCoin) {
+void Engine::plus_coin(int getCoin) {
 	coin += getCoin;
 }
-void engine::get_tree_levels(int index_tree, int& blockNum, int* levels) {
-	virus->
+void Engine::get_tree_levels(int index_tree, int& blockNum, int* levels) {
+	
 }
-void engine::click_tech(int index_tree, int index_block, char* name, char* info, double up[3]) {
+void Engine::click_tech(int index_tree, int index_block, char* name, char* info, double up[3]) {
 
 }
-void engine::upgrade_available(int index_tree, int& blockNum, bool* availble) {
+void Engine::upgrade_available(int index_tree, int& blockNum, bool* availble) {
 
 }

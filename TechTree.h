@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include "virus.h"
+#include "virusStatus.h"
 
 #ifndef _OOP_proj__TechTree_
 #define _OOP_proj__TechTree_
@@ -30,11 +31,10 @@ public:
 	void setCost(int _levelMax, int first_cost);
 	void setPreTech(bool* _beforeIndex, TechBlock** _before, int _techNum);
 	void setIncreaseStatus(VirusStatus _increase);
-	void getAvailable const(bool& available);
-	void getCost const(int& _cost);
-	void getLevel const(int& _level);
-	void getName const(char** _name);
-	void getInfo const(char* info, double up[3]);
+	void getAvailable(bool& available);
+	void getCost(int& _cost);
+	void getLevel(int& _level);
+	void getInfo(char* _name, char* _info, double up[3]);
 	void upgrade(VirusStatus& Vstatus);
 };
 
@@ -45,7 +45,7 @@ private:
 	char info[41];
 	int levelMax;
 	TechBlock** tree;
-	static int upgradeNum;
+	int upgradeNum;
 public:
 	TechTree(const int _techNum):techNum(_techNum) {
 		tree = new TechBlock*[techNum];

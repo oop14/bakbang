@@ -9,7 +9,7 @@ void Vaccine::do_operation() {
 
 	current_developed_point += developing_speed;
 }
-void Vaccine::getVaccine const(double& current_point, double& speed) {
+void Vaccine::getVaccine(double& current_point, double& speed) {
 	current_point = current_developed_point;
 	speed = developing_speed;
 }

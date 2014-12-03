@@ -8,12 +8,12 @@ void boolcpy(bool* dest, char* src) {
 }
 
 Virus::Virus() {
-	double inf[4] = {0}, des[3] = {0};
 }
 Virus::~Virus() {
 }
 void Virus::setTech(int difficulty, int cost_buf, double vac_buf, double stat_buf) {
 	
+	double inf[4] = {0}, des[3] = {0};
 	Vstatus = new VirusStatus(inf,des,1,100+vac_buf);
 
 	char** nameArr[3];
@@ -124,7 +124,7 @@ void Virus::setTech(int difficulty, int cost_buf, double vac_buf, double stat_bu
 		delete[]statArr[i];
 	}
 }
-void Virus::getVirusStatus const(VirusStatus* _Vstatus) {
+void Virus::getVirusStatus(VirusStatus* _Vstatus) {
 	_Vstatus = Vstatus;
 }
 void Virus::setDifficulty(int _difficulty, int _sinario) {
@@ -133,7 +133,7 @@ void Virus::setDifficulty(int _difficulty, int _sinario) {
 
 	setTech(difficulty, difficulty/2, (sinario==1)*10+difficulty, (sinario==2)*0.1);//임의 지정
 }
-void Virus::getTechTree const(int index, TechTree* _tree) {
+void Virus::getTechTree(int index, TechTree* _tree) {
 	_tree = NULL;
 	if( index<3 && index>=0 )
 		_tree = status[index];
