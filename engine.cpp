@@ -12,11 +12,12 @@ void engine::initGame() {
 	virus = new Virus;
 
 	VirusStatus* vs;
-	virus.getVirusStatus(vs);
+	virus->getVirusStatus(vs);
 	
-	double person_activitiy[4];
-	double person_security[3];
-	double building_interact[2][B_NUMBER];
+	double person_activitiy[4] = {1,1,1,7};
+	double person_security[3] = {1,3,6};
+	double building_interact[2][B_NUMBER] = {{0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1},
+											 {0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1}};
 
 	buildings.push_back(new Building("ºôµù1",0,100,person_activitiy,person_security,1,vs,building_interact));
 	buildings.push_back(new Building("ºôµù2",1,110,person_activitiy,person_security,1,vs,building_interact));
